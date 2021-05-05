@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.company.mapper.SimpleBoardReplyMapper">
+    <select id="getReplyList" parameterType="com.company.domain.ReplyPageVO" resultType="com.company.domain.ReplyVO">
+        select rn ,sbno, srbno,target,writer,content,regdate,updatedate from(
+        select rownum rn,sbno ,srbno,target,writer,content,regdate,updatedate from tbl_simpleBoardReply where sbno=#{sbno} and rownum  <![CDATA[ <=((#{replyPage}*10)) order by srbno desc
+        ) where rn>((#{replyPage}-1)*10) ]]>
+    </select>
+    <insert id="insertReply" >
+        insert into tbl_simpleBoardReply(writer , content,sbno)
+        values(#{writer},#{content} ,#{sbno})
+
+    </insert>
+    <select id="getReplyCount" resultType="int">
+        select (count(*)+9)/10 from tbl_simpleBoardReply where sbno=#{sbno}
+    </select>
+</mapper>

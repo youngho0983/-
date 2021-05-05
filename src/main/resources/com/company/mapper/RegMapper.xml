@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.company.mapper.RegMapper">
+    <select id="findSameUserId" resultType="int">
+        select count(*) from tbl_user where Id=#{userId}
+    </select>
+    <insert id="insertUser" parameterType="com.company.domain.UserVO">
+    insert into tbl_user(id ,password ,name ,phone , email)
+    values(#{id},#{password},#{name},#{phone},#{email})
+    </insert>
+    <select id="login" parameterType="com.company.domain.UserVO" resultType="String">
+        select id from tbl_user where id=#{id} and password =#{password}
+    </select>
+    <select id="loginAjax" parameterType="com.company.domain.UserVO" resultType="int">
+        select count(*) from tbl_user where id=#{id} and password = #{password}
+    </select>
+    <select id="mypage" resultType="com.company.domain.UserVO">
+        select * from tbl_user where id=#{id}
+    </select>
+    <update id="changeUserInfo" parameterType="com.company.domain.UserVO" >
+        update tbl_user
+        set
+        password=#{password},
+        email=#{email},
+        phone=#{phone}
+        where
+        id=#{id}
+    </update>
+</mapper>
