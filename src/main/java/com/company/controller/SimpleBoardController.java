@@ -46,7 +46,8 @@ public class SimpleBoardController {
         return "/simpleboard/simpleBoard1";
     }
     @RequestMapping("/simpleBoard2")
-    public String goSimpleBoard2(){
+    public String goSimpleBoard2(Model model){
+        System.out.println("go simpleBoardlist");
 
         return "simpleboard/simpleBoard1";
     }
@@ -121,4 +122,5 @@ public class SimpleBoardController {
         return result;
 
     }
+
  }

@@ -6,12 +6,34 @@
         values(#{title},#{writer},#{content})
 
     </insert>
-    <select id="getBoardList" resultType="com.company.domain.SimpleBoardVO">
-        select sbno , sb.title , sb.writer, sb.content,sb.regdate,sb.updatedate ,rsbno,replyNum from tbl_simpleboard sb, (select sbno rsbno,count(nvl(sbno,0)) replyNum from tbl_simpleBoardReply group by sbno) where rsbno(+)=sbno
-
-    </select>
+    <select id="getBoardList" resultType="com.company.domain.SimpleBoardVO" parameterType="com.company.domain.PageAndCriteriaVO">
+        select rn ,sbno ,title,writer,
+               content,
+               regdate,
+               updatedate,
+               rsbno,
+               replyNum from
+        (select rownum rn,
+                sbno,
+                sb.title,
+                sb.writer,
+                sb.content,
+                sb.regdate,
+                sb.updatedate,
+                rsbno,
+                replyNum
+         from tbl_simpleboard sb,
+              (select sbno rsbno, count(nvl(sbno, 0)) replyNum from tbl_simpleBoardReply group by sbno)
+         where rsbno(+) = sbno
+           and rownum <![CDATA[ <= #{pageNum} * #{criteria}
+         order by sbno desc
+        ) where rn> (#{pageNum}-1)*#{criteria}]]>
+        </select>
     <select id="readBoard" resultType="com.company.domain.SimpleBoardVO">
     select * from tbl_simpleBoard where sbno =#{sbno}
 
+    </select>
+    <select id="getPageNum" resultType="int">
+        select rownum/10 from tbl_simpleBoard
     </select>
 </mapper>

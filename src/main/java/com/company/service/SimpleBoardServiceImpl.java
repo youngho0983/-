@@ -1,5 +1,6 @@
 package com.company.service;
 
+import com.company.domain.PageAndCriteriaVO;
 import com.company.domain.SimpleBoardVO;
 import com.company.mapper.SimpleBoardMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,8 @@ public class SimpleBoardServiceImpl implements SimpleBoardService{
 
     @Override
     public List getList(int pageNum,int criteria) {
-        List<SimpleBoardVO> list=mapper.getBoardList(pageNum,criteria);
+        PageAndCriteriaVO vo=new PageAndCriteriaVO(pageNum,criteria);
+        List<SimpleBoardVO> list=mapper.getBoardList(vo);
         return list;
     }
 

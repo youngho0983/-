@@ -53,13 +53,12 @@ public class RegController {
         return "redirect:/reg/signin";
     }
     @RequestMapping(value="/idCheck",method = RequestMethod.POST)
-    public ResponseEntity<String> idCheck(HttpServletRequest request) throws IOException {
+    public ResponseEntity<String> idCheck(HttpServletRequest request,String userId) throws IOException {
         System.out.println( request.getInputStream().isReady());
         System.out.println("idCheck");
         log.info("idCheck");
-
-
-        boolean canUse= regService.fingSameId("user01");
+        System.out.println(userId);
+        boolean canUse= regService.fingSameId(userId);
         System.out.println(canUse);
 
         if(canUse){

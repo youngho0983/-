@@ -1,0 +1,9 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.company.mapper.PhotoBoardMapper">
+    <select id="getList" resultType="com.company.domain.PhotoBoardVO">
+        select * from tbl_photoBoard
+    </select>
+    <insert id="insertVO" parameterType="com.company.domain.PhotoBoardVO">
+        insert into tbl_photoBoard(writer,content) values(#{writer},#{content})
+    </insert>
+</mapper>
